@@ -9,7 +9,7 @@ sub generate_surface_color_palette {
     my ($seed, $size) = @_;
     my ($surface_color_palette, $foo);
     srand($seed);
-    for (1..$size) {
+    for (1..($size+2)) {
  
         $foo .= sprintf("%x", rand 16) for 1..6;
         $surface_color_palette .= "$foo ";
