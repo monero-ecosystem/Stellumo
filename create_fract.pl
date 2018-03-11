@@ -56,6 +56,7 @@ my $tx_hash1 = $decoded->{'data'}{'txs'}[1]{'tx_hash'} if $decoded->{'data'}{'tx
 my $tx_hash2 = $decoded->{'data'}{'txs'}[2]{'tx_hash'} if $decoded->{'data'}{'txs'}[2]{'tx_hash'};
 my $tx_hash3 = $decoded->{'data'}{'txs'}[3]{'tx_hash'} if $decoded->{'data'}{'txs'}[3]{'tx_hash'};
 my $tx_hash4 = $decoded->{'data'}{'txs'}[4]{'tx_hash'} if $decoded->{'data'}{'txs'}[4]{'tx_hash'};
+my $tx_hash5 = $decoded->{'data'}{'txs'}[5]{'tx_hash'} if $decoded->{'data'}{'txs'}[4]{'tx_hash'}; # for random lights generation
  
 my $tx_fee1 = $decoded->{'data'}{'txs'}[1]{'tx_fee'} / 1300000000000 if $decoded->{'data'}{'txs'}[1]{'tx_fee'};
 my $tx_fee2 = $decoded->{'data'}{'txs'}[2]{'tx_fee'} / 1300000000000 if $decoded->{'data'}{'txs'}[2]{'tx_fee'};
@@ -86,7 +87,7 @@ $bg_color2 .= "00";
 $bg_color3 =~ s/..\K(?=.)/00 /sg;
 $bg_color3 .= "00";
  
- 
+
  
 my $palette_size = substr($blockhash, 28, 2);
 $palette_size = sprintf("%d", hex($palette_size));
@@ -129,8 +130,34 @@ $gama_rotation = ($gama_rotation / 16) - 8;
 my $y_box_fold = substr($blockhash, 51, 4); # divide by 262144 and add 0.5
 $y_box_fold = sprintf("%d", hex($y_box_fold));
 $y_box_fold = ($y_box_fold / 262144) + 0.5;
- 
- 
+
+my $rlights_seed = 1;
+my $rlights_dx = 0;
+my $rlights_dy = 0;
+my $rlights_dz = 0;
+my $rlights_num = ($txnum - 4);
+my $rlights = "false";
+
+if($tx_hash5){
+$rlights_seed = substr($tx_hash5, 0, 4);
+$rlights_seed = sprintf("%d", hex($rlights_seed));
+$rlights_dx = substr($tx_hash5, 4, 4);
+$rlights_dx = sprintf("%d", hex($rlights_dx));
+$rlights_dx = ($rlights_dx / 32768) - 1;
+$rlights_dy = substr($tx_hash5, 8, 4);
+$rlights_dy = sprintf("%d", hex($rlights_dy));
+$rlights_dy = ($rlights_dx / 32768) - 1;
+$rlights_dz = substr($tx_hash5, 12, 4);
+$rlights_dz = sprintf("%d", hex($rlights_dz));
+$rlights_dz = ($rlights_dx / 32768) - 1;
+$rlights = "true";
+}
+
+my $lights_enabled = "false";
+if($tx_hash5){
+$lights_enabled = "true";
+}
+
  
 my $fold_and_rotation_byte =  substr($blockhash, 63, 1); # if 0-3 use nothing if 4-7 use $y_box_fold if 8-11 use *_rotations 12-15 nothing
  
@@ -354,8 +381,14 @@ mat1_coloring_random_seed 61976; # static
 mat1_coloring_speed $color_speed; # 1 byte, '7'
 mat1_is_defined true; # static
 mat1_surface_color_palette $gen; # GENERATE USING FIRST 6 BYTES OF BLOCKHASH AS SEED. LENGTH IS mat1_coloring_palette_size
-target 0 0 0; # static
-view_distance_max 1250;  # static
+random_lights_distribution_center $rlights_dx $rlights_dy $rlights_dz;
+random_lights_distribution_radius 4;
+random_lights_group $rlights;
+random_lights_intensity 0.6;
+random_lights_max_distance_from_fractal 0.6;
+random_lights_number $rlights_num;
+random_lights_random_seed $rlights_seed;
+view_distance_max 1150;  # static
 repeat 8 8 8;
 [fractal_1]
 IFS_abs_x true; # static
