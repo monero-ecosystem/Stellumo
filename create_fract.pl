@@ -48,7 +48,7 @@ my $txnum = scalar(@{$decoded->{'data'}{'txs'}}) - 1;
 print "The number of transactions is ".$txnum."\n" if $debug;
 
 for (1..scalar(@{$decoded->{'data'}{'txs'}})-1) {
-    print "Transaction numer $_ has hash " . $decoded->{'data'}{'txs'}[$_]{'tx_hash'}  
+    print "Transaction number $_ has hash " . $decoded->{'data'}{'txs'}[$_]{'tx_hash'}  
     ."and has a fee ".  $decoded->{'data'}{'txs'}[$_]{'tx_fee'} / 1000000000000 ."\n" if $debug;
 }
  
@@ -166,7 +166,6 @@ my ($brightness, $brightness2, $brightness3, $brightness4) = (" ") x 4;
 my ($color, $color2, $color3, $color4) = (" ") x 4;
 
 
-
 if ($tx_hash1) {
 
     $x_light_position = (substr($tx_hash1, 0, 4));
@@ -248,6 +247,61 @@ if ($tx_hash4) {
  
     $brightness4 = $tx_fee4 * 10;
 }
+
+my $camera_pos = "0.5657031888468234 -2.764463391368074 0.4975508102106437";
+my $camera_top = "-0.03481289900076248 0.1701227547102634 0.9848077530122081";
+my $camera_rot = "11.56500000000002 -9.999999999999989 0";
+my $camera_tar = "2.865280919705257";
+
+print $height;
+
+if($height >= 1009827 && $height < 1141317) {
+
+$camera_pos = "2.219438048054018 1.109716546001921 1.432640459852628";
+$camera_top = "-0.4547451154264854 -0.2078626469468535 0.8660254037844389";
+$camera_rot = "114.565 -29.99999999999996 0";
+
+}
+
+if($height >= 1141317 && $height < 1220516) {
+
+$camera_pos = "-0.8044893775961957 2.704639491950941 -0.4975508102106453";
+$camera_top = "-0.04366872617903531 0.1680676410286832 0.9848077530122085";
+$camera_rot = "-165.435 9.999999999999989 0";
+
+}
+
+if($height >= 1220516 && $height < 1288616) {
+
+$camera_pos = "1.122234136839151 2.588989857492427 0.4975508102106437";
+$camera_top = "-0.0690613460048356 -0.1593242608488931 0.9848077530122086";
+$camera_rot = "156.5650000000001 -9.999999999999989 0";
+
+}
+
+if($height >= 1288616 && $height < 1400000) {
+
+$camera_pos = "-1.31799790913125 -2.210033361161712 1.260344715903144";
+$camera_top = "0.2253009707652209 0.3777871408168339 0.8980625528356535";
+$camera_rot = "-30.81058841234304 -26.09544436694554 0";
+
+}
+
+if($height >= 1400000 && $height < 1539500) {
+
+$camera_pos = "2.834443203877877 -0.2884414684974628 0.3042498842540278";
+$camera_top = "-0.1054357275300752 0.01259221162347292 0.9943463901310416";
+$camera_rot = "83.18941158765709 -6.095444366945558 0";
+
+}
+
+if($height >= 1539500 ) {
+
+$camera_pos = "-1.787317448728921 1.787317448728921 1.787317448728921";
+$camera_top = "0.4082482903528664 -0.4082482903528663 0.8164965810387228";
+$camera_rot = "-135 -35.26438967173943 0";
+
+}
  
 my $gen = generate_surface_color_palette($seed_palette, $palette_size);
 my $fractal_file = <<"END";
@@ -257,7 +311,7 @@ my $fractal_file = <<"END";
 [main_parameters]
 ambient_occlusion 0.5; # NEVER CHANGE
 ambient_occlusion_enabled true; # NEVER CHANGE
-fov 1.65;
+fov 1.75;
 aux_light_colour_1 $color; # FROM 6 BYTES OF TX 1
 aux_light_colour_2 $color2; # FROM 6 BYTES OF TX 2
 aux_light_colour_3 $color3;; # FROM 6 BYTES OF TX 3
@@ -281,13 +335,14 @@ background_color_3 $bg_color1; # BACKGROUND COLOR 3 'c79277'
 basic_fog_color $bg_color1; # NEVER CHANGE
 basic_fog_enabled true;
 basic_fog_visibility 900; # NEVER CHANGE
-camera 0.5657031888468234 -2.764463391368074 0.4975508102106437; # NEVER CHANGE
-camera_distance_to_target 3.206694336613312; # NEVER CHANGE
-camera_rotation 11.56500000000002 -9.999999999999989 0; # NEVER CHANGE
-camera_top -0.03481289900076248 0.1701227547102634 0.9848077530122081; # NEVER CHANGE
+camera $camera_pos;
+camera_distance_to_target $camera_tar;
+camera_rotation $camera_rot;
+camera_top $camera_top;
 DE_factor 1; # NEVER CHANGE
 DE_thresh 0.0025; # NEVER CHANGE
 delta_DE_function 2; # NEVER CHANGE
+detail_level 1.25;
 flight_last_to_render 0; # NEVER CHANGE
 formula_1 10; # NEVER CHANGE
 image_height 1024; # NEVER CHANGE
@@ -301,8 +356,8 @@ mat1_coloring_random_seed 61976; # NEVER CHANGE
 mat1_coloring_speed $color_speed; # 1 byte, '7'
 mat1_is_defined true; # NEVER CHANGE
 mat1_surface_color_palette $gen; # GENERATE USING FIRST 6 BYTES OF BLOCKHASH AS SEED. LENGTH IS mat1_coloring_palette_size
-target -0.06740653502130167 0.329400473745273 -0.05928581767712342; # NEVER CHANGE
-view_distance_max 1000;  # NEVER CHANGE
+target 0 0 0; # NEVER CHANGE
+view_distance_max 1250;  # NEVER CHANGE
 repeat 8 8 8;
 [fractal_1]
 IFS_abs_x true; # NEVER CHANGE
