@@ -388,8 +388,8 @@ mat1_surface_color_palette $gen; # GENERATE USING FIRST 6 BYTES OF BLOCKHASH AS 
 random_lights_distribution_center $rlights_dx $rlights_dy $rlights_dz;
 random_lights_distribution_radius 4;
 random_lights_group $rlights;
-random_lights_intensity 0.85;
-random_lights_max_distance_from_fractal 0.525;
+random_lights_intensity 0.4;
+random_lights_max_distance_from_fractal 0.8;
 random_lights_number $rlights_num;
 random_lights_random_seed $rlights_seed;
 view_distance_max 1150;  # static
