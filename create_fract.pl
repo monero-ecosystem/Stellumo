@@ -1,8 +1,15 @@
+# Fractal file generator for Mandelbulber2 using data from monero's blockchain as seed
+# by garytheasshole and KnifeOfPi
+
 use warnings;
 use strict;
 use 5.014;
 use LWP::UserAgent();
 use JSON qw( decode_json );
+
+# Run your own blockchain explorer on your local monero blockchain to avoid trashing xmrchain.net and pull blocks much faster
+# See https://github.com/moneroexamples/onion-monero-blockchain-explorer then change this varialbe to localhost/local ip
+my $bc_explorer = "xmrchain.net";
 
 sub generate_surface_color_palette {
    
@@ -20,11 +27,12 @@ sub generate_surface_color_palette {
     return $surface_color_palette;
 }
 
+
 my $height = shift or die "Usage: perl $0 height <debug>\n";
 my $debug = shift;
 my $ua = LWP::UserAgent->new;
 
-my $response = $ua->get("http://xmrchain.net/api/block/".$height);
+my $response = $ua->get("http://".$bc_explorer."/api/block/".$height);
 my $decoded = decode_json($response->content);
 
 print "Raw content response for $height is\n\n". $response->content ."\n\n" if $debug;
@@ -48,6 +56,7 @@ my $txnum = scalar(@{$decoded->{'data'}{'txs'}}) - 1;
 print "The number of transactions is ".$txnum."\n" if $debug;
 
 for (1..scalar(@{$decoded->{'data'}{'txs'}})-1) {
+
     print "Transaction number $_ has hash " . $decoded->{'data'}{'txs'}[$_]{'tx_hash'}  
     ."and has a fee ".  $decoded->{'data'}{'txs'}[$_]{'tx_fee'} / 1000000000000 ."\n" if $debug;
 }
@@ -63,8 +72,6 @@ my $tx_fee2 = $decoded->{'data'}{'txs'}[2]{'tx_fee'} / 1300000000000 if $decoded
 my $tx_fee3 = $decoded->{'data'}{'txs'}[3]{'tx_fee'} / 1300000000000 if $decoded->{'data'}{'txs'}[3]{'tx_fee'}; # normalize fees
 my $tx_fee4 = $decoded->{'data'}{'txs'}[4]{'tx_fee'} / 1300000000000 if $decoded->{'data'}{'txs'}[4]{'tx_fee'};
  
-
-
 my ($is1, $is2, $is3, $is4) = ("false") x 4;
 $is1 = "true" if $tx_hash1;
 $is2 = "true" if $tx_hash2;
@@ -79,7 +86,6 @@ my $bg_color2 = substr($blockhash, 16, 6); # keep in hex
 my $bg_color3 = substr($blockhash, 22, 6);
 $bg_color1 =~ s/..\K(?=.)/00 /sg;
 $bg_color1 .= "00";
- 
  
 $bg_color2 =~ s/..\K(?=.)/00 /sg;
 $bg_color2 .= "00";
@@ -132,31 +138,29 @@ $y_box_fold = sprintf("%d", hex($y_box_fold));
 $y_box_fold = ($y_box_fold / 262144) + 0.5;
 
 my $rlights_seed = 1;
-my $rlights_dx = 0;
-my $rlights_dy = 0;
-my $rlights_dz = 0;
+my ($rlights_dx, $rlights_dy, $rlights_dz) = (0) x 3;
 my $rlights_num = ($txnum - 4);
 my $rlights = "false";
 
-if($tx_hash5){
-$rlights_seed = substr($tx_hash5, 0, 4);
-$rlights_seed = sprintf("%d", hex($rlights_seed));
-$rlights_dx = substr($tx_hash5, 4, 4);
-$rlights_dx = sprintf("%d", hex($rlights_dx));
-$rlights_dx = ($rlights_dx / 32768) - 1;
-$rlights_dy = substr($tx_hash5, 8, 4);
-$rlights_dy = sprintf("%d", hex($rlights_dy));
-$rlights_dy = ($rlights_dx / 32768) - 1;
-$rlights_dz = substr($tx_hash5, 12, 4);
-$rlights_dz = sprintf("%d", hex($rlights_dz));
-$rlights_dz = ($rlights_dx / 32768) - 1;
-$rlights = "true";
+if ($tx_hash5) {
+
+    $rlights_seed = substr($tx_hash5, 0, 4);
+    $rlights_seed = sprintf("%d", hex($rlights_seed));
+    $rlights_dx = substr($tx_hash5, 4, 4);
+    $rlights_dx = sprintf("%d", hex($rlights_dx));
+    $rlights_dx = ($rlights_dx / 32768) - 1;
+    $rlights_dy = substr($tx_hash5, 8, 4);
+    $rlights_dy = sprintf("%d", hex($rlights_dy));
+    $rlights_dy = ($rlights_dx / 32768) - 1;
+    $rlights_dz = substr($tx_hash5, 12, 4);
+    $rlights_dz = sprintf("%d", hex($rlights_dz));
+    $rlights_dz = ($rlights_dx / 32768) - 1;
+    $rlights = "true";
 }
 
 my $lights_enabled = "false";
-if($tx_hash5){
-$lights_enabled = "true";
-}
+$lights_enabled = "true" if $tx_hash5;
+
 
  
 my $fold_and_rotation_byte =  substr($blockhash, 63, 1); # if 0-3 use nothing if 4-7 use $y_box_fold if 8-11 use *_rotations 12-15 nothing
@@ -172,7 +176,6 @@ $use_y_box_fold = 0;
 $use_y_box_fold = 1 if ( $fold_and_rotation_byte <= 7 && $fold_and_rotation_byte > 3);
 $use_rotations = 0;
 $use_rotations = 1 if ( $fold_and_rotation_byte <= 11 && $fold_and_rotation_byte > 7);
- 
 $use_nothing = 1 if ( $fold_and_rotation_byte <= 15 && $fold_and_rotation_byte > 11);
  
 $whattouse = 0;
@@ -180,7 +183,6 @@ $whattouse = $y_box_fold if ( $use_y_box_fold == 1 );
 $whattouse = $fold_and_rotation_byte if ( $use_rotations == 1 );
  
 my $truefalse = $use_nothing == 1 ? "false" : "true";
-print "$truefalse\n";
  
 my $main_light_color = substr($coinbase_hash, 0, 6);
 $main_light_color =~ s/..\K(?=.)/00 /sg;
@@ -236,6 +238,7 @@ if ($tx_hash2) {
 } 
 
 if ($tx_hash3) {
+
     $x_light_position3 = (substr($tx_hash3, 0, 4));
     $x_light_position3  = sprintf("%d", hex($x_light_position3));
     $x_light_position3 = ($x_light_position3 / 32768) - 1;
@@ -256,6 +259,7 @@ if ($tx_hash3) {
 }
  
 if ($tx_hash4) {
+
     $x_light_position4 = (substr($tx_hash4, 0, 4));
     $x_light_position4  = sprintf("%d", hex($x_light_position4));
     $x_light_position4 = ($x_light_position4 / 32768) - 1;
@@ -280,51 +284,51 @@ my $camera_top = "-0.03481289900076248 0.1701227547102634 0.9848077530122081";
 my $camera_rot = "11.56500000000002 -9.999999999999989 0";
 my $camera_tar = "2.865280919705257";
 
-if($height >= 1009827 && $height < 1141317) {
+if ($height >= 1009827 && $height < 1141317) {
 
-$camera_pos = "2.219438048054018 1.109716546001921 1.432640459852628";
-$camera_top = "-0.4547451154264854 -0.2078626469468535 0.8660254037844389";
-$camera_rot = "114.565 -29.99999999999996 0";
-
-}
-
-if($height >= 1141317 && $height < 1220516) {
-
-$camera_pos = "-0.8044893775961957 2.704639491950941 -0.4975508102106453";
-$camera_top = "-0.04366872617903531 0.1680676410286832 0.9848077530122085";
-$camera_rot = "-165.435 9.999999999999989 0";
+    $camera_pos = "2.219438048054018 1.109716546001921 1.432640459852628";
+    $camera_top = "-0.4547451154264854 -0.2078626469468535 0.8660254037844389";
+    $camera_rot = "114.565 -29.99999999999996 0";
 
 }
 
-if($height >= 1220516 && $height < 1288616) {
+if ($height >= 1141317 && $height < 1220516) {
 
-$camera_pos = "1.122234136839151 2.588989857492427 0.4975508102106437";
-$camera_top = "-0.0690613460048356 -0.1593242608488931 0.9848077530122086";
-$camera_rot = "156.5650000000001 -9.999999999999989 0";
+    $camera_pos = "-0.8044893775961957 2.704639491950941 -0.4975508102106453";
+    $camera_top = "-0.04366872617903531 0.1680676410286832 0.9848077530122085";
+    $camera_rot = "-165.435 9.999999999999989 0";
 
 }
 
-if($height >= 1288616 && $height < 1400000) {
+if ($height >= 1220516 && $height < 1288616) {
 
-$camera_pos = "-1.31799790913125 -2.210033361161712 1.260344715903144";
-$camera_top = "0.2253009707652209 0.3777871408168339 0.8980625528356535";
-$camera_rot = "-30.81058841234304 -26.09544436694554 0";
+    $camera_pos = "1.122234136839151 2.588989857492427 0.4975508102106437";
+    $camera_top = "-0.0690613460048356 -0.1593242608488931 0.9848077530122086";
+    $camera_rot = "156.5650000000001 -9.999999999999989 0";
+
+}
+
+if ($height >= 1288616 && $height < 1400000) {
+
+    $camera_pos = "-1.31799790913125 -2.210033361161712 1.260344715903144";
+    $camera_top = "0.2253009707652209 0.3777871408168339 0.8980625528356535";
+    $camera_rot = "-30.81058841234304 -26.09544436694554 0";
 
 }
 
 if($height >= 1400000 && $height < 1539500) {
 
-$camera_pos = "2.834443203877877 -0.2884414684974628 0.3042498842540278";
-$camera_top = "-0.1054357275300752 0.01259221162347292 0.9943463901310416";
-$camera_rot = "83.18941158765709 -6.095444366945558 0";
+    $camera_pos = "2.834443203877877 -0.2884414684974628 0.3042498842540278";
+    $camera_top = "-0.1054357275300752 0.01259221162347292 0.9943463901310416";
+    $camera_rot = "83.18941158765709 -6.095444366945558 0";
 
 }
 
 if($height >= 1539500 ) {
 
-$camera_pos = "-1.787317448728921 1.787317448728921 1.787317448728921";
-$camera_top = "0.4082482903528664 -0.4082482903528663 0.8164965810387228";
-$camera_rot = "-135 -35.26438967173943 0";
+    $camera_pos = "-1.787317448728921 1.787317448728921 1.787317448728921";
+    $camera_top = "0.4082482903528664 -0.4082482903528663 0.8164965810387228";
+    $camera_rot = "-135 -35.26438967173943 0";
 
 }
  
@@ -408,7 +412,7 @@ IFS_rotation_enabled $truefalse; #set to false if the byte '3' isn't 8-B
 IFS_scale $scale; #SCALE '72'
 END
  
-my $filename = 'fract.fract';
+my $filename = $height.".fract";
 open(my $fh, '>', $filename) or die "Could not open file '$filename' $!";
 print $fh $fractal_file;
 close $fh;
