@@ -8,7 +8,7 @@ use LWP::UserAgent();
 use JSON qw( decode_json );
 
 # Run your own blockchain explorer on your local monero blockchain to avoid trashing xmrchain.net and pull blocks much faster
-# See https://github.com/moneroexamples/onion-monero-blockchain-explorer then change this varialbe to localhost/local ip
+# See https://github.com/moneroexamples/onion-monero-blockchain-explorer then change this variable to localhost/local ip
 my $bc_explorer = "xmrchain.net";
 
 sub generate_surface_color_palette {
@@ -65,7 +65,7 @@ my $tx_hash1 = $decoded->{'data'}{'txs'}[1]{'tx_hash'} if $decoded->{'data'}{'tx
 my $tx_hash2 = $decoded->{'data'}{'txs'}[2]{'tx_hash'} if $decoded->{'data'}{'txs'}[2]{'tx_hash'};
 my $tx_hash3 = $decoded->{'data'}{'txs'}[3]{'tx_hash'} if $decoded->{'data'}{'txs'}[3]{'tx_hash'};
 my $tx_hash4 = $decoded->{'data'}{'txs'}[4]{'tx_hash'} if $decoded->{'data'}{'txs'}[4]{'tx_hash'};
-my $tx_hash5 = $decoded->{'data'}{'txs'}[5]{'tx_hash'} if $decoded->{'data'}{'txs'}[4]{'tx_hash'}; # for random lights generation
+my $tx_hash5 = $decoded->{'data'}{'txs'}[5]{'tx_hash'} if $decoded->{'data'}{'txs'}[5]{'tx_hash'}; # for random lights generation
  
 my $tx_fee1 = $decoded->{'data'}{'txs'}[1]{'tx_fee'} / 1300000000000 if $decoded->{'data'}{'txs'}[1]{'tx_fee'};
 my $tx_fee2 = $decoded->{'data'}{'txs'}[2]{'tx_fee'} / 1300000000000 if $decoded->{'data'}{'txs'}[2]{'tx_fee'};
