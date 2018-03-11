@@ -307,8 +307,8 @@ my $fractal_file = <<"END";
 # version 2.11
 # only modified parameters
 [main_parameters]
-ambient_occlusion 0.5; # NEVER CHANGE
-ambient_occlusion_enabled true; # NEVER CHANGE
+ambient_occlusion 0.5; # static
+ambient_occlusion_enabled true; # static
 fov 1.75;
 aux_light_colour_1 $color; # FROM 6 BYTES OF TX 1
 aux_light_colour_2 $color2; # FROM 6 BYTES OF TX 2
@@ -326,49 +326,49 @@ aux_light_position_1 $x_light_position $y_light_position $z_light_position; # X 
 aux_light_position_2 $x_light_position2 $y_light_position2 $z_light_position2; # X POSITION OF LIGHT Y POSITION OF LIGHT Z POSITION OF LIGHT
 aux_light_position_3 $x_light_position3 $y_light_position3 $z_light_position3; # X POSITION OF LIGHT Y POSITION OF LIGHT Z POSITION OF LIGHT
 aux_light_position_4 $x_light_position4 $y_light_position4 $z_light_position4; # X POSITION OF LIGHT Y POSITION OF LIGHT Z POSITION OF LIGHT
-aux_light_visibility_size 0.13; # NEVER CHANGE
+aux_light_visibility_size 0.13; # static
 background_color_1 $bg_color1; # BACKGROUND COLOR 1 'e982a1'
 background_color_2 $bg_color1; # BACKGROUND COLOR 2 '975da7'
 background_color_3 $bg_color1; # BACKGROUND COLOR 3 'c79277'
-basic_fog_color $bg_color1; # NEVER CHANGE
+basic_fog_color $bg_color1; # static
 basic_fog_enabled true;
-basic_fog_visibility 900; # NEVER CHANGE
+basic_fog_visibility 900; # static
 camera $camera_pos;
 camera_distance_to_target $camera_tar;
 camera_rotation $camera_rot;
 camera_top $camera_top;
-DE_factor 1; # NEVER CHANGE
-DE_thresh 0.0025; # NEVER CHANGE
-delta_DE_function 2; # NEVER CHANGE
+DE_factor 1; # static
+DE_thresh 0.0025; # static
+delta_DE_function 2; # static
 detail_level 1.25;
-flight_last_to_render 0; # NEVER CHANGE
-formula_1 10; # NEVER CHANGE
-image_height 1024; # NEVER CHANGE
-image_width 1024; # NEVER CHANGE
-keyframe_last_to_render 0; # NEVER CHANGE
+flight_last_to_render 0; # static
+formula_1 10; # static
+image_height 1024; # static
+image_width 1024; # static
+keyframe_last_to_render 0; # static
 main_light_colour $main_light_color; # MAIN LIGHT COLOR '0d91c9'
 main_light_intensity $main_light_intensity; # FROM COINBASE TX VALUE # blockchain magic?
 mat1_coloring_palette_offset $palette_offset; # 2 bytes '05'
 mat1_coloring_palette_size $palette_size; # 2 bytes 'c2'
-mat1_coloring_random_seed 61976; # NEVER CHANGE
+mat1_coloring_random_seed 61976; # static
 mat1_coloring_speed $color_speed; # 1 byte, '7'
-mat1_is_defined true; # NEVER CHANGE
+mat1_is_defined true; # static
 mat1_surface_color_palette $gen; # GENERATE USING FIRST 6 BYTES OF BLOCKHASH AS SEED. LENGTH IS mat1_coloring_palette_size
-target 0 0 0; # NEVER CHANGE
-view_distance_max 1250;  # NEVER CHANGE
+target 0 0 0; # static
+view_distance_max 1250;  # static
 repeat 8 8 8;
 [fractal_1]
-IFS_abs_x true; # NEVER CHANGE
-IFS_abs_y true; # NEVER CHANGE
-IFS_abs_z true; # NEVER CHANGE
-IFS_direction_5 1 -1 0; # NEVER CHANGE
-IFS_direction_6 1 0 -1; # NEVER CHANGE
-IFS_direction_7 0 1 -1; # NEVER CHANGE
+IFS_abs_x true; # static
+IFS_abs_y true; # static
+IFS_abs_z true; # static
+IFS_direction_5 1 -1 0; # static
+IFS_direction_6 1 0 -1; # static
+IFS_direction_7 0 1 -1; # static
 IFS_edge 0 $whattouse 0; # SECOND VALUE IS Y BOX FOLD ('daab'). if byte ('3') from the 'nothing, y_box_fold, rotations, nothing' isn't set to y_box_fold, this is zero
 IFS_edge_enabled true; #or you could set this to true/false depending on this value
-IFS_enabled_5 true; # NEVER CHANGE
-IFS_enabled_6 true; # NEVER CHANGE
-IFS_enabled_7 true; # NEVER CHANGE
+IFS_enabled_5 true; # static
+IFS_enabled_6 true; # static
+IFS_enabled_7 true; # static
 IFS_offset $x_vector_offset $y_vector_offset $z_vector_offset; #X VECTOR OFFSET Y VECTOR OFFSET Z VECTOR OFFSET
 IFS_rotation $alpha_rotation $beta_rotation $gama_rotation; #ALPHA ROTATION BETA ROTATION GAMMA ROTATION (4b a0 fb)
 IFS_rotation_enabled $truefalse; #set to false if the byte '3' isn't 8-B
