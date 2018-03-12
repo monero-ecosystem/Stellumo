@@ -6,6 +6,8 @@ use strict;
 use 5.014;
 use LWP::UserAgent();
 use JSON qw( decode_json );
+use Math::Trig;
+use Math::Trig ':pi';
 
 # Run your own blockchain explorer on your local monero blockchain to avoid trashing xmrchain.net and pull blocks much faster
 # See https://github.com/moneroexamples/onion-monero-blockchain-explorer then change this variable to localhost/local ip
@@ -40,6 +42,10 @@ print "Blockhash for $height is  $decoded->{'data'}{'hash'} \n" if $debug;
 
 my $blockhash = $decoded->{'data'}{'hash'} 
 or die "Something went terribly bad cannot fetch blockhash with height: $height\n";
+
+if(!$blockhash){
+exit 13;
+}
 
 print "Coinbase hash for $height block $blockhash is $decoded->{'data'}{'txs'}[0]{'tx_hash'} \n" if $debug;
 
@@ -136,6 +142,24 @@ $gama_rotation = ($gama_rotation / 16) - 8;
 my $y_box_fold = substr($blockhash, 51, 4); # divide by 262144 and add 0.5
 $y_box_fold = sprintf("%d", hex($y_box_fold));
 $y_box_fold = ($y_box_fold / 262144) + 0.5;
+
+# $coinbase_hash
+
+my $r1 = substr($coinbase_hash, 16, 4);
+$r1 = sprintf("%d", hex($r1));
+$r1 = $r1 / 65535;
+
+my $r2 = substr($coinbase_hash, 20, 4);
+$r2 = sprintf("%d", hex($r2));
+$r2 = $r2 / 65535;
+
+my $lat = acos(2*$r1-1)-(pi/2);
+my $long = 2*pi*$r2;
+
+my $xpos = cos($lat)*cos($long)*3.25;
+my $ypos = cos($lat)*sin($long)*3.25;
+my $zpos = sin($lat)*3.25;
+
 
 my $rlights_seed = 1;
 my ($rlights_dx, $rlights_dy, $rlights_dz) = (0) x 3;
@@ -278,59 +302,6 @@ if ($tx_hash4) {
  
     $brightness4 = $tx_fee4 * 10;
 }
-
-my $camera_pos = "0.5657031888468234 -2.764463391368074 0.4975508102106437";
-my $camera_top = "-0.03481289900076248 0.1701227547102634 0.9848077530122081";
-my $camera_rot = "11.56500000000002 -9.999999999999989 0";
-my $camera_tar = "2.865280919705257";
-
-if ($height >= 1009827 && $height < 1141317) {
-
-    $camera_pos = "2.219438048054018 1.109716546001921 1.432640459852628";
-    $camera_top = "-0.4547451154264854 -0.2078626469468535 0.8660254037844389";
-    $camera_rot = "114.565 -29.99999999999996 0";
-
-}
-
-if ($height >= 1141317 && $height < 1220516) {
-
-    $camera_pos = "-0.8044893775961957 2.704639491950941 -0.4975508102106453";
-    $camera_top = "-0.04366872617903531 0.1680676410286832 0.9848077530122085";
-    $camera_rot = "-165.435 9.999999999999989 0";
-
-}
-
-if ($height >= 1220516 && $height < 1288616) {
-
-    $camera_pos = "1.122234136839151 2.588989857492427 0.4975508102106437";
-    $camera_top = "-0.0690613460048356 -0.1593242608488931 0.9848077530122086";
-    $camera_rot = "156.5650000000001 -9.999999999999989 0";
-
-}
-
-if ($height >= 1288616 && $height < 1400000) {
-
-    $camera_pos = "-1.31799790913125 -2.210033361161712 1.260344715903144";
-    $camera_top = "0.2253009707652209 0.3777871408168339 0.8980625528356535";
-    $camera_rot = "-30.81058841234304 -26.09544436694554 0";
-
-}
-
-if($height >= 1400000 && $height < 1539500) {
-
-    $camera_pos = "2.834443203877877 -0.2884414684974628 0.3042498842540278";
-    $camera_top = "-0.1054357275300752 0.01259221162347292 0.9943463901310416";
-    $camera_rot = "83.18941158765709 -6.095444366945558 0";
-
-}
-
-if($height >= 1539500 ) {
-
-    $camera_pos = "-1.787317448728921 1.787317448728921 1.787317448728921";
-    $camera_top = "0.4082482903528664 -0.4082482903528663 0.8164965810387228";
-    $camera_rot = "-135 -35.26438967173943 0";
-
-}
  
 my $gen = generate_surface_color_palette($seed_palette, $palette_size);
 my $fractal_file = <<"END";
@@ -364,10 +335,9 @@ background_color_3 $bg_color1; # BACKGROUND COLOR 3 'c79277'
 basic_fog_color $bg_color1; # static
 basic_fog_enabled true;
 basic_fog_visibility 900; # static
-camera $camera_pos;
-camera_distance_to_target $camera_tar;
-camera_rotation $camera_rot;
-camera_top $camera_top;
+camera $xpos $ypos $zpos;
+camera_distance_to_target 3.25;
+camera_top 0 0 1;
 DE_factor 1; # static
 DE_thresh 0.0025; # static
 delta_DE_function 2; # static
@@ -388,8 +358,8 @@ mat1_surface_color_palette $gen; # GENERATE USING FIRST 6 BYTES OF BLOCKHASH AS 
 random_lights_distribution_center $rlights_dx $rlights_dy $rlights_dz;
 random_lights_distribution_radius 4;
 random_lights_group $rlights;
-random_lights_intensity 0.3;
-random_lights_max_distance_from_fractal 0.8;
+random_lights_intensity 0.4;
+random_lights_max_distance_from_fractal 0.525;
 random_lights_number $rlights_num;
 random_lights_random_seed $rlights_seed;
 view_distance_max 1150;  # static
