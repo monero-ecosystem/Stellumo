@@ -156,9 +156,9 @@ $r2 = $r2 / 65535;
 my $lat = acos(2*$r1-1)-(pi/2);
 my $long = 2*pi*$r2;
 
-my $xpos = cos($lat)*cos($long)*3.5;
-my $ypos = cos($lat)*sin($long)*3.5;
-my $zpos = sin($lat)*3.5;
+my $xpos = cos($lat)*cos($long)*3.14;
+my $ypos = cos($lat)*sin($long)*3.14;
+my $zpos = sin($lat)*3.14;
 
 
 my $rlights_seed = 1;
