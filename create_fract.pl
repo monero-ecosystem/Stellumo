@@ -341,7 +341,7 @@ camera_top 0 0 1;
 DE_factor 1; # static
 DE_thresh 0.0025; # static
 delta_DE_function 2; # static
-detail_level 1.25;
+detail_level 1.4;
 flight_last_to_render 0; # static
 formula_1 10; # static
 image_height 1024; # static
