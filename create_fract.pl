@@ -192,7 +192,6 @@ my $fold_and_rotation_byte =  substr($blockhash, 63, 1); # if 0-3 use nothing if
 my ($use_nothing, $use_y_box_fold, $use_rotations, $whattouse);
  
 $fold_and_rotation_byte = sprintf("%d", hex($fold_and_rotation_byte));
-$fold_and_rotation_byte = 16;
  
 $use_nothing = 0;
 $use_nothing = 1 if ( $fold_and_rotation_byte <= 3 );
