@@ -9,7 +9,7 @@ use JSON qw( decode_json );
 use Math::Trig;
 use Math::Trig ':pi';
 
-# Run your own blockchain explorer on your local monero blockchain to avoid trashing xmrchain.net and pull blocks much faster
+# Pleae run your own blockchain explorer on your local monero blockchain to avoid trashing xmrchain.net and pull blocks much faster
 # See https://github.com/moneroexamples/onion-monero-blockchain-explorer then change this variable to localhost/local ip
 my $bc_explorer = "xmrchain.net";
 
