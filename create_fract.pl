@@ -205,7 +205,7 @@ $whattouse = 0;
 $whattouse = $y_box_fold if ( $use_y_box_fold == 1 );
 $whattouse = $fold_and_rotation_byte if ( $use_rotations == 1 );
  
-my $truefalse = $use_rotations == 1 ? "false" : "true";
+my $truefalse = $use_rotations == 0 ? "false" : "true";
  
 my $main_light_color = substr($coinbase_hash, 0, 6);
 $main_light_color =~ s/..\K(?=.)/00 /sg;
