@@ -1,5 +1,5 @@
 # Fractal file generator for Mandelbulber2 using data from monero's blockchain as seed
-# by garytheasshole and KnifeOfPi
+# by garytheasshole, KnifeOfPi and zebastian
 
 use warnings;
 use strict;
