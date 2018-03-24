@@ -1,0 +1,89 @@
+# Mandelbulber settings file
+# version 2.11
+# only modified parameters
+[main_parameters]
+ambient_occlusion 0.6; # static
+ambient_occlusion_enabled true; # static
+fov 1.5;
+DOF_enabled true;
+DOF_focus 2;
+DOF_radius 3;
+hdr_blur_enabled true;
+hdr_blur_intensity 0,5;
+hdr_blur_radius 3;
+volumetric_fog_colour_1_distance 0,8238602737388034;
+volumetric_fog_colour_2_distance 1,647720547477607;
+volumetric_fog_distance_factor 1,647720547477607;
+fog_color_1 aF00 FF00 aE00; # FROM 6 BYTES OF TX 1
+fog_color_2 Fa00 0D00 dF00; # FROM 6 BYTES OF TX 2
+fog_color_3 ef00 dE00 ED00; # FROM 6 BYTES OF TX 3
+volumetric_fog_density 0,2;
+volumetric_fog_enabled true;
+aux_light_colour_1 af00 3300 3700; # FROM 6 BYTES OF TX 1
+aux_light_colour_2 2e00 bb00 bb00; # FROM 6 BYTES OF TX 2
+aux_light_colour_3 5c00 7800 8100;; # FROM 6 BYTES OF TX 3
+aux_light_colour_3 a700 9900 a200; # FROM 6 BYTES OF TX 4
+aux_light_enabled_1 true; # FALSE IF NUM OF NON-COINBASE TX < 1
+aux_light_enabled_2 true; # FALSE IF NUM OF NON-COINBASE TX < 2 # blockchain voodoo later
+aux_light_enabled_3 true; # FALSE IF NUM OF NON-COINBASE TX < 3
+aux_light_enabled_4 true; # FALSE IF NUM OF NON-COINBASE TX < 4
+aux_light_intensity_1 0.1766942419; # BRIGHTNESS
+aux_light_intensity_2 0.1766942419; # BRIGHTNESS
+aux_light_intensity_3 0.1766942419; # BRIGHTNESS
+aux_light_intensity_4 0.1766959206; # BRIGHTNESS
+aux_light_position_1 -0.611114501953125 0.24603271484375 0.658203125; # X POSITION OF LIGHT Y POSITION OF LIGHT Z POSITION OF LIGHT
+aux_light_position_2 -0.616302490234375 -0.109344482421875 0.2662353515625; # X POSITION OF LIGHT Y POSITION OF LIGHT Z POSITION OF LIGHT
+aux_light_position_3 0.0345458984375 -0.4586181640625 0.5596923828125; # X POSITION OF LIGHT Y POSITION OF LIGHT Z POSITION OF LIGHT
+aux_light_position_4 0.73675537109375 -0.972320556640625 0.5596923828125; # X POSITION OF LIGHT Y POSITION OF LIGHT Z POSITION OF LIGHT
+aux_light_visibility_size 0.13; # static
+background_color_1 a600 6300 a500; # BACKGROUND COLOR 1 'e982a1'
+background_color_2 a600 6300 a500; # BACKGROUND COLOR 2 '975da7'
+background_color_3 a600 6300 a500; # BACKGROUND COLOR 3 'c79277'
+basic_fog_color a600 6300 a500; # static
+basic_fog_enabled true;
+basic_fog_visibility 900; # static
+camera 2.84320647049658 1.18698690960424 0.605672388799878;
+camera_distance_to_target 3.25;
+camera_top 0 0 1;
+DE_factor 1; # static
+DE_thresh 0.0025; # static
+delta_DE_function 2; # static
+detail_level 1.4;
+flight_last_to_render 0; # static
+formula_1 10; # static
+image_height 1024; # static
+image_width 1024; # static
+keyframe_last_to_render 0; # static
+main_light_colour cd00 4500 df00; # MAIN LIGHT COLOR '0d91c9'
+main_light_intensity 0.742795060994333; # FROM COINBASE TX VALUE # blockchain magic?
+mat1_coloring_palette_offset 119; # 2 bytes '05'
+mat1_coloring_palette_size 11; # 2 bytes 'c2'
+mat1_coloring_random_seed 61976; # static
+mat1_coloring_speed 6; # 1 byte, '7'
+mat1_is_defined true; # static
+mat1_surface_color_palette 02bcbf e05272 0c94aa 2f0873 d6d0d3 154a29 c12d76 ea3a00 0e6fdc fbd74c 7b6adb d4e7cf 1a5a43; # GENERATE USING FIRST 6 BYTES OF BLOCKHASH AS SEED. LENGTH IS mat1_coloring_palette_size
+random_lights_distribution_center -0.44677734375 -1.00001363456249 -1.00001363456249;
+random_lights_distribution_radius 4;
+random_lights_group true;
+random_lights_intensity 0.4;
+random_lights_max_distance_from_fractal 0.525;
+random_lights_number 1;
+random_lights_random_seed 33221;
+view_distance_max 1150;  # static
+repeat 8 8 8;
+[fractal_1]
+IFS_abs_x true; # static
+IFS_abs_y true; # static
+IFS_abs_z true; # static
+IFS_direction_5 1 -1 0; # static
+IFS_direction_6 1 0 -1; # static
+IFS_direction_7 0 1 -1; # static
+IFS_edge 0 8 0; # SECOND VALUE IS Y BOX FOLD ('daab'). if byte ('3') from the 'nothing, y_box_fold, rotations, nothing' isn't set to y_box_fold, this is zero
+IFS_edge_enabled true; #or you could set this to true/false depending on this value
+IFS_enabled_5 true; # static
+IFS_enabled_6 true; # static
+IFS_enabled_7 true; # static
+IFS_offset 1.1171875 0.16796875 0.546875; #X VECTOR OFFSET Y VECTOR OFFSET Z VECTOR OFFSET
+IFS_rotation 0.5 7.3125 7.625; #ALPHA ROTATION BETA ROTATION GAMMA ROTATION (4b a0 fb)
+IFS_rotation_enabled true; #set to false if the byte '3' isn't 8-B
+IFS_scale 1.54296875; #SCALE '72'
