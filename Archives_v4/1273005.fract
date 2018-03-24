@@ -1,0 +1,89 @@
+# Mandelbulber settings file
+# version 2.11
+# only modified parameters
+[main_parameters]
+ambient_occlusion 0.6; # static
+ambient_occlusion_enabled true; # static
+fov 1.5;
+DOF_enabled true;
+DOF_focus 2;
+DOF_radius 3;
+hdr_blur_enabled true;
+hdr_blur_intensity 0,5;
+hdr_blur_radius 3;
+volumetric_fog_colour_1_distance 0,8238602737388034;
+volumetric_fog_colour_2_distance 1,647720547477607;
+volumetric_fog_distance_factor 1,647720547477607;
+fog_color_1 DD00 bb00 aE00; # FROM 6 BYTES OF TX 1
+fog_color_2 FF00 Db00 DF00; # FROM 6 BYTES OF TX 2
+fog_color_3 cE00 bd00 fd00; # FROM 6 BYTES OF TX 3
+volumetric_fog_density 0,2;
+volumetric_fog_enabled true;
+aux_light_colour_1 0a00 b200 6900; # FROM 6 BYTES OF TX 1
+aux_light_colour_2  ; # FROM 6 BYTES OF TX 2
+aux_light_colour_3  ;; # FROM 6 BYTES OF TX 3
+aux_light_colour_3  ; # FROM 6 BYTES OF TX 4
+aux_light_enabled_1 true; # FALSE IF NUM OF NON-COINBASE TX < 1
+aux_light_enabled_2 false; # FALSE IF NUM OF NON-COINBASE TX < 2 # blockchain voodoo later
+aux_light_enabled_3 false; # FALSE IF NUM OF NON-COINBASE TX < 3
+aux_light_enabled_4 false; # FALSE IF NUM OF NON-COINBASE TX < 4
+aux_light_intensity_1 0.1488002452; # BRIGHTNESS
+aux_light_intensity_2  ; # BRIGHTNESS
+aux_light_intensity_3  ; # BRIGHTNESS
+aux_light_intensity_4  ; # BRIGHTNESS
+aux_light_position_1 0.316497802734375 -0.524078369140625 -0.0205078125; # X POSITION OF LIGHT Y POSITION OF LIGHT Z POSITION OF LIGHT
+aux_light_position_2      ; # X POSITION OF LIGHT Y POSITION OF LIGHT Z POSITION OF LIGHT
+aux_light_position_3      ; # X POSITION OF LIGHT Y POSITION OF LIGHT Z POSITION OF LIGHT
+aux_light_position_4      ; # X POSITION OF LIGHT Y POSITION OF LIGHT Z POSITION OF LIGHT
+aux_light_visibility_size 0.13; # static
+background_color_1 4700 bb00 a500; # BACKGROUND COLOR 1 'e982a1'
+background_color_2 4700 bb00 a500; # BACKGROUND COLOR 2 '975da7'
+background_color_3 4700 bb00 a500; # BACKGROUND COLOR 3 'c79277'
+basic_fog_color 4700 bb00 a500; # static
+basic_fog_enabled true;
+basic_fog_visibility 900; # static
+camera -0.642151114063706 -1.33698717927698 -2.76761760891127;
+camera_distance_to_target 3.25;
+camera_top 0 0 1;
+DE_factor 1; # static
+DE_thresh 0.0025; # static
+delta_DE_function 2; # static
+detail_level 1.4;
+flight_last_to_render 0; # static
+formula_1 10; # static
+image_height 1024; # static
+image_width 1024; # static
+keyframe_last_to_render 0; # static
+main_light_colour 0f00 3c00 de00; # MAIN LIGHT COLOR '0d91c9'
+main_light_intensity 0.681554233548167; # FROM COINBASE TX VALUE # blockchain magic?
+mat1_coloring_palette_offset 84; # 2 bytes '05'
+mat1_coloring_palette_size 127; # 2 bytes 'c2'
+mat1_coloring_random_seed 61976; # static
+mat1_coloring_speed 17; # 1 byte, '7'
+mat1_is_defined true; # static
+mat1_surface_color_palette ce2cd4 1c6125 e878a1 252ae4 1f2872 3a4f53 2b9b75 6dfdec 0156c2 e6a479 0f49f2 189cd9 f06c0f 5ec451 b23ccb 48e1b4 aa0553 2e7998 0d846e 2afd66 c51973 f5f609 524b63 2ed38e 60da03 ad1796 cf2c8c cf8950 bf2ef7 a7a657 34087d 7d5b5a 4409c8 79a455 098feb ea370d 31fe0d 66b15b c98d99 f0466a 0f6fdc 3f4e0d 2ad894 cb1fda 3b9e6b cbb3e0 80fd23 ebbbb7 c86524 1cd843 bfeb72 435d7b aa53f1 5c4ae3 38e68c b2994f d83cdf 7d0ab3 176907 be5def a32510 50efa4 a066fd 455e2b fc4a6b 90ce69 14bd0b 543bc5 c416db 66f479 0f3e1a 50b70a c70514 7a6e0b 3ca08c 245566 c54264 e4ac37 efde09 c4f3dc 6a3e9e beb5af 60fe08 5511aa d7703e e901a6 643bdb 079d08 850a85 71e7be e60bce 98f286 80c324 72dbac e1b945 fca6a2 1e595b 204be6 efc050 a7334b b55660 3d8f90 013ef1 92230e 594874 7adf22 c5bab0 b6ecbe 3b8102 2c878d 68716d 1c0896 bee9b5 eabe15 ca6dc2 c80d5d 3c100d 32fcae 6c1cee c0bae7 b32ac4 3e4221 5f0e97 ec4ff5 cb9bf5 988bbe 4817b1 e3ea9e 4b974b; # GENERATE USING FIRST 6 BYTES OF BLOCKHASH AS SEED. LENGTH IS mat1_coloring_palette_size
+random_lights_distribution_center 0 0 0;
+random_lights_distribution_radius 4;
+random_lights_group false;
+random_lights_intensity 0.4;
+random_lights_max_distance_from_fractal 0.525;
+random_lights_number -3;
+random_lights_random_seed 1;
+view_distance_max 1150;  # static
+repeat 8 8 8;
+[fractal_1]
+IFS_abs_x true; # static
+IFS_abs_y true; # static
+IFS_abs_z true; # static
+IFS_direction_5 1 -1 0; # static
+IFS_direction_6 1 0 -1; # static
+IFS_direction_7 0 1 -1; # static
+IFS_edge 0 8 0; # SECOND VALUE IS Y BOX FOLD ('daab'). if byte ('3') from the 'nothing, y_box_fold, rotations, nothing' isn't set to y_box_fold, this is zero
+IFS_edge_enabled true; #or you could set this to true/false depending on this value
+IFS_enabled_5 true; # static
+IFS_enabled_6 true; # static
+IFS_enabled_7 true; # static
+IFS_offset 0.7890625 0.236328125 0.16015625; #X VECTOR OFFSET Y VECTOR OFFSET Z VECTOR OFFSET
+IFS_rotation -2.6875 -2.5 5.4375; #ALPHA ROTATION BETA ROTATION GAMMA ROTATION (4b a0 fb)
+IFS_rotation_enabled true; #set to false if the byte '3' isn't 8-B
+IFS_scale 1.97265625; #SCALE '72'
