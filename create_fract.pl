@@ -317,11 +317,11 @@ my $fractal_file = <<"END";
 [main_parameters]
 ambient_occlusion 0.6; # static
 ambient_occlusion_enabled true; # static
-fov 1.5;
+fov 1.6;
 DOF_enabled true;
 DOF_focus 2;
 DOF_radius 3;
-hdr_blur_enabled true;
+hdr_blur_enabled false;
 hdr_blur_intensity 0,5;
 hdr_blur_radius 3;
 volumetric_fog_colour_1_distance 0,8238602737388034;
@@ -330,7 +330,7 @@ volumetric_fog_distance_factor 1,647720547477607;
 fog_color_1 $f_color1; # FROM 6 BYTES OF TX 1
 fog_color_2 $f_color2; # FROM 6 BYTES OF TX 2
 fog_color_3 $f_color3; # FROM 6 BYTES OF TX 3
-volumetric_fog_density 0,2;
+volumetric_fog_density 0,16;
 volumetric_fog_enabled true;
 aux_light_colour_1 $color; # FROM 6 BYTES OF TX 1
 aux_light_colour_2 $color2; # FROM 6 BYTES OF TX 2
