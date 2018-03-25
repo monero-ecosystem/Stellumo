@@ -326,7 +326,7 @@ volumetric_fog_distance_factor 1,647720547477607;
 fog_color_1 $f_color1; # FROM 6 BYTES OF TX 1
 fog_color_2 $f_color2; # FROM 6 BYTES OF TX 2
 fog_color_3 $f_color3; # FROM 6 BYTES OF TX 3
-volumetric_fog_density 0,16;
+volumetric_fog_density 0,17;
 volumetric_fog_enabled true;
 aux_light_colour_1 $color; # FROM 6 BYTES OF TX 1
 aux_light_colour_2 $color2; # FROM 6 BYTES OF TX 2
@@ -350,7 +350,7 @@ background_color_2 $bg_color1; # BACKGROUND COLOR 2 '975da7'
 background_color_3 $bg_color1; # BACKGROUND COLOR 3 'c79277'
 basic_fog_color $bg_color1; # static
 basic_fog_enabled true;
-basic_fog_visibility 900; # static
+basic_fog_visibility 600; # static
 camera $xpos $ypos $zpos;
 camera_distance_to_target 3.25;
 camera_top 0 0 1;
@@ -379,7 +379,7 @@ random_lights_intensity 0.4;
 random_lights_max_distance_from_fractal 0.525;
 random_lights_number $rlights_num;
 random_lights_random_seed $rlights_seed;
-view_distance_max 1150;  # static
+view_distance_max 900;  # static
 repeat 8 8 8;
 [fractal_1]
 IFS_abs_x true; # static
