@@ -103,10 +103,6 @@ $bg_color3 .= "00";
 my $f_color1 = $bg_color1;
 my $f_color2 = $bg_color2;
 my $f_color3 = $bg_color3;
-
-$f_color1 =~ tr/123456789AB/DEFDEFDEFDE/;
-$f_color2 =~ tr/123456789AB/DEFDEFDEFDE/;
-$f_color3 =~ tr/123456789AB/DEFDEFDEFDE/;
  
 my $palette_size = substr($blockhash, 28, 2);
 $palette_size = sprintf("%d", hex($palette_size));
@@ -364,6 +360,7 @@ delta_DE_function 2; # static
 detail_level 1.4;
 flight_last_to_render 0; # static
 formula_1 10; # static
+glow_enabled false; #static
 image_height 1024; # static
 image_width 1024; # static
 keyframe_last_to_render 0; # static
