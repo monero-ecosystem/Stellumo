@@ -29,6 +29,7 @@ sub generate_surface_color_palette {
     return $surface_color_palette;
 }
 
+# TODO add method to normalize a value to arbitrary range
 
 my $height = shift or die "Usage: perl $0 height <debug>\n";
 my $debug = shift;
@@ -44,7 +45,7 @@ my $blockhash = $decoded->{'data'}{'hash'}
 or die "Something went terribly bad cannot fetch blockhash with height: $height\n";
 
 if(!$blockhash){
-exit 13;
+exit 13; # this is for script that keeps up with blockchain
 }
 
 print "Coinbase hash for $height block $blockhash is $decoded->{'data'}{'txs'}[0]{'tx_hash'} \n" if $debug;
